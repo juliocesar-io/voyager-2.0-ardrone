@@ -20,8 +20,6 @@ thread_lock = Lock()
 lidar = Lidar_Lite()
 connected_l = lidar.connect(1)
 
-drone = libardrone.ARDrone()
-
 def background_lidar_thread():
     while True:
         if connected_l < -1:
@@ -31,8 +29,6 @@ def background_lidar_thread():
                 dist = lidar.getDistance()
                 socketio.sleep(0.1)
                 socketio.emit('lidar_response', {'data': 'lidar_cm', 'cm': dist})
-        	if dist < 40:
-        		print "Retroceder!"
 
 
 @app.route('/')
@@ -43,33 +39,33 @@ def index():
 @socketio.on('DisparadorOn-Off')
 def start(takeoff):
     if takeoff:
-        drone.takeoff()
+        socketio.emit('takeoff')
     else:
-        drone.land()
+        socketio.emit('land')
 
 @socketio.on('goForward')
 def go_forward():
-    drone.move_forward()
+    socketio.emit('front')
 
 @socketio.on('goBackward')
 def go_backward():
-    drone.move_backward()
+    socketio.emit('back')
 
 @socketio.on('turnLeft')
 def go_forward():
-    drone.turn_left()
+    socketio.emit('left')
 
 @socketio.on('turnRight')
 def go_forward():
-    drone.turn_right()
+    socketio.emit('right')
 
 @socketio.on('brazoW')
 def go_forward():
-    drone.move_up()
+    socketio.emit('up')
 
 @socketio.on('brazoS')
 def go_forward():
-    drone.move_down()
+    socketio.emit('down')
 
 @socketio.on('ServoOn-Off')
 def servo_control(estado):
@@ -87,7 +83,7 @@ def test_connect():
     with thread_lock:
         if thread is None:
             thread = socketio.start_background_task(target=background_lidar_thread)
-    emit('my_response', {'data': 'Connected', 'count': 0})
+    emit('connect', {'data': 'Connected', 'count': 0})
 
 if __name__ == '__main__':
     socketio.run(app, host="0.0.0.0", debug=True, port=8080)

@@ -7,6 +7,8 @@ from servo import Servo
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '23dfgmdfgm345!'
 socketio = SocketIO(app)
+thread = None
+thread_lock = Lock()
 
 lidar = Lidar_Lite()
 connected = lidar.connect(1)

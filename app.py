@@ -14,18 +14,18 @@ thread = None
 thread_lock = Lock()
 
 lidar = Lidar_Lite()
-connected = lidar.connect(1)
+connected_l = lidar.connect(1)
 
 servo = Servo()
-connected = servo.connect(14)
+connected_s = servo.connect(14)
 
 def background_lidar_thread():
     while True:
         socketio.sleep(10)
-        if connected < -1:
+        if connected_l < -1:
             socketio.emit('lidar_response', {'data': 'lidar_cm', 'cm': "Not Connected"})
         else:
-            while (connected >= 0):
+            while (connected_l >= 0):
                 dist = lidar.getDistance()
                 print dist
         	if dist < 40:

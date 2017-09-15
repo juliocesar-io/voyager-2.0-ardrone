@@ -1,5 +1,6 @@
 from flask import Flask, render_template
 from flask_socketio import SocketIO, emit
+from threading import Lock
 # local
 from lidar import Lidar_Lite
 from servo import Servo

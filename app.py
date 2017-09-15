@@ -45,3 +45,4 @@ def test_connect():
 
 if __name__ == '__main__':
     socketio.run(app)
+    app.run(host="0.0.0.0", debug=True)

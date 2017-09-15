@@ -137,11 +137,14 @@
             "on_keydown": function() {
                 disparadorEstado = !disparadorEstado;
                 socket.emit('DisparadorOn-Off', disparadorEstado);
-                $('.k32').addClass('active');
+                console.log(disparadorEstado);
+                if (disparadorEstado) {
+                    $(".k32").addClass('active');
+                } else {
+                    $(".k32").removeClass('active');
+                }
             },
             "on_keyup": function(e) {
-              console.log("--");
-              $('.k32').removeClass('active');
             }
           },{
             "keys": "q",

@@ -4,7 +4,7 @@ from time import sleep
 
 class Servo():
 
-    def connect(pin):
+    def connect(self, pin):
         self.pin = pin
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(pin, GPIO.OUT)
@@ -12,7 +12,7 @@ class Servo():
         pwm.start(0)
 
 
-    def set_angle(angle):
+    def set_angle(self, angle):
     	duty = angle / 18 + 2
     	GPIO.output(self.pin, True)
     	pwm.ChangeDutyCycle(duty)
@@ -20,6 +20,6 @@ class Servo():
     	GPIO.output(self.pin, False)
     	pwm.ChangeDutyCycle(0)
 
-    def stop():
+    def stop(self):
         pwm.stop()
         GPIO.cleanup()

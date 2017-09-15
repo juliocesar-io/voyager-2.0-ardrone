@@ -21,12 +21,12 @@ connected_s = servo.connect(14)
 
 def background_lidar_thread():
     while True:
-        socketio.sleep(10)
         if connected_l < -1:
             socketio.emit('lidar_response', {'data': 'lidar_cm', 'cm': "Not Connected"})
         else:
             while (connected_l >= 0):
                 dist = lidar.getDistance()
+                socketio.sleep(10)
                 socketio.emit('lidar_response', {'data': 'lidar_cm', 'cm': dist})
         	if dist < 40:
         		print "Retroceder!"

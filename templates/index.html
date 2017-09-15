@@ -1,0 +1,348 @@
+<html>
+<head>
+    <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="static/status.css" media="screen" title="no title" charset="utf-8">
+  <link href="static/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="static/font-awesome.min.css">
+  <script src="static/jquery.min.js"></script>
+ <script src="static/jquery-ui.min.js"></script>
+  <script src="static/keypress.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
+
+
+
+  <style type="text/css">
+  #stream {
+    height: 99%;
+    margin: 0px auto;
+    display: block;
+    margin-top: 20px;
+  }
+  </style>
+
+  <script>
+    $(document).ready(function() {
+      var listener = new window.keypress.Listener();
+      var socket = io.connect();
+      var luzEstado = 1;
+      var disparadorEstado = 1;
+      var gradosCam = 90;
+      var my_combos = listener.register_many([
+          {
+              "keys": "up",
+              "on_keydown": function() {
+                  console.log("Client: Going forward");
+                  socket.emit('goForward');
+                  $(".up").addClass('active');
+              },
+              "on_keyup": function(e) {
+                  console.log("Client: Stop!");
+                  socket.emit('stop');
+                  $(".up").removeClass('active');
+              }
+          }, {
+              "keys": "down",
+              "on_keydown": function() {
+                  console.log("Client: Going backward");
+                  socket.emit('goBackward');
+                  $(".down").addClass('active');
+              },
+              "on_keyup": function(e) {
+                  console.log("Client: Stop!");
+                  socket.emit('stop');
+                  $(".down").removeClass('active');
+              }
+          },{
+              "keys": "left",
+              "on_keydown": function() {
+                  console.log("Client: Turning left");
+                  socket.emit('turnLeft');
+                  $(".left").addClass('active');
+              },
+              "on_keyup": function(e) {
+                  console.log("Client: Stop!");
+                  socket.emit('stop');
+                  $(".left").removeClass('active');
+              }
+          },{
+              "keys": "right",
+              "on_keydown": function() {
+                  console.log("Client: Turning right");
+                  socket.emit('turnRight');
+                  $(".right").addClass('active');
+              },
+              "on_keyup": function(e) {
+                  console.log("Client: Stop!");
+                  socket.emit('stop');
+                  $(".right").removeClass('active');
+              }
+          },{
+            "keys": "a",
+            "on_keydown": function() {
+                socket.emit('pinzaA');
+            },
+            "on_keyup": function(e) {
+                console.log("--");
+            }
+          },{
+            "keys": "d",
+            "on_keydown": function() {
+                socket.emit('pinzaD');
+            },
+            "on_keyup": function(e) {
+                console.log("--");
+            }
+          },{
+            "keys": "w",
+            "on_keydown": function() {
+                socket.emit('brazoW');
+            },
+            "on_keyup": function(e) {
+                console.log("--");
+                //socket.emit('brazoB');
+            }
+          },{
+            "keys": "s",
+            "on_keydown": function() {
+                socket.emit('brazoS');
+            },
+            "on_keyup": function(e) {
+                console.log("--");
+            }
+          },{
+            "keys": "x",
+            "on_keydown": function() {
+                socket.emit('brazoX');
+            },
+            "on_keyup": function(e) {
+                console.log("--");
+            }
+          },{
+            "keys": "shift",
+            "on_keydown": function() {
+                luzEstado = !luzEstado;
+                console.log(luzEstado);
+                socket.emit('luzOn-Off', luzEstado );
+                if (luzEstado) {
+                    $(".shift").addClass('active');
+                } else {
+                  $(".shift").removeClass('active');
+                }
+            },
+            "on_keyup": function(e) {
+              console.log("--");
+            }
+          },{
+            "keys": "space",
+            "on_keydown": function() {
+                disparadorEstado = !disparadorEstado;
+                socket.emit('DisparadorOn-Off', disparadorEstado);
+                $('.k32').addClass('active');
+            },
+            "on_keyup": function(e) {
+              console.log("--");
+              $('.k32').removeClass('active');
+            }
+          },{
+            "keys": "q",
+            "on_keydown": function() {
+                gradosCam = gradosCam + 5
+                console.log(gradosCam);
+                socket.emit('servoCam', gradosCam);
+                  $(".q").addClass('active');
+            },
+            "on_keyup": function(e) {
+              console.log("--");
+              $(".q").removeClass('active');
+            }
+          },{
+            "keys": "e",
+            "on_keydown": function() {
+                gradosCam = gradosCam - 5
+                console.log(gradosCam);
+                socket.emit('servoCam', gradosCam);
+                  $(".e").addClass('active');
+            },
+            "on_keyup": function(e) {
+              console.log("--");
+              $(".e").removeClass('active');
+            }
+          }
+        ]);
+        $('#btn-vel').click(function() {
+          var velocidad_num = $('#vel').val();
+          socket.emit('vel', velocidad_num );
+        });
+    });
+
+    socket.on('lidar_response', function(msg) {
+        $('#lidar-cm').append(msg.cm + " cm");
+    });
+  </script>
+
+</head>
+<body style="text-align:center; ">
+
+<div class="panel">
+  <br>
+  <img style="width:150px" src="static/img/logo.png" alt="" />
+  <br>
+  <p style="color:#6f6f6f;">Web Controller</p>
+  <br>
+
+
+  <ul class="menu">
+
+        <li><strong>MAC address:</strong> E0:DB:10:E5:A8:45 (Raspberry Pi) </li>
+        <li><strong>IP:</strong> <input type="url" name="name" value="172.20.95.174"></li>
+        <li><strong>TCP Port: </strong><input type="number" name="name" value="3000"></li>
+        <li><strong>USB Port: </strong><input type="text" name="name" value="/dev/cu.usbmodem1421"></li>
+        <li><strong>Board Micro: </strong><input type="text" name="name" value="Arduino MEGA 2560"></li>
+        <br>
+
+        <button type="button" name="button"><svg style="width:18px;height:18px; vertical-align: middle;" viewBox="0 0 24 24">
+    <path fill="#000000" d="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z" />
+</svg> Save</button>
+        <button type="button" name="button"><svg style="width:18px;height:18px; vertical-align: middle;" viewBox="0 0 24 24">
+    <path fill="#000000" d="M12,3A9,9 0 0,0 3,12H0L4,16L8,12H5A7,7 0 0,1 12,5A7,7 0 0,1 19,12A7,7 0 0,1 12,19C10.5,19 9.09,18.5 7.94,17.7L6.5,19.14C8.04,20.3 9.94,21 12,21A9,9 0 0,0 21,12A9,9 0 0,0 12,3M14,12A2,2 0 0,0 12,10A2,2 0 0,0 10,12A2,2 0 0,0 12,14A2,2 0 0,0 14,12Z" />
+</svg>Reset</button>
+        <button type="button" name="button"><svg style="width:18px;height:18px; vertical-align: middle;" viewBox="0 0 24 24">
+    <path fill="#000000" d="M4,1C2.89,1 2,1.89 2,3V7C2,8.11 2.89,9 4,9H1V11H13V9H10C11.11,9 12,8.11 12,7V3C12,1.89 11.11,1 10,1H4M4,3H10V7H4V3M3,13V18L3,20H10V18H5V13H3M14,13C12.89,13 12,13.89 12,15V19C12,20.11 12.89,21 14,21H11V23H23V21H20C21.11,21 22,20.11 22,19V15C22,13.89 21.11,13 20,13H14M14,15H20V19H14V15Z" />
+</svg>Ping</button>
+
+  </ul>
+  <div class="status-bar">    44% (11V) <svg style="width:27px;height:27px; vertical-align: middle;" viewBox="0 0 24 24">
+        <path fill="#6f6f6f" d="M4,3V6H1V20H23V6H20V3H14V6H10V3H4M3,8H21V18H3V8M15,10V12H13V14H15V16H17V14H19V12H17V10H15M5,12V14H11V12H5Z" />
+    </svg>
+
+
+    1 <svg style="width:27px;height:27px; vertical-align: middle;" viewBox="0 0 24 24">
+      <path fill="#6f6f6f" d="M12,13C9.33,13 4,14.33 4,17V20H20V17C20,14.33 14.67,13 12,13M12,4A4,4 0 0,0 8,8A4,4 0 0,0 12,12A4,4 0 0,0 16,8A4,4 0 0,0 12,4M12,14.9C14.97,14.9 18.1,16.36 18.1,17V18.1H5.9V17C5.9,16.36 9,14.9 12,14.9M12,5.9A2.1,2.1 0 0,1 14.1,8A2.1,2.1 0 0,1 12,10.1A2.1,2.1 0 0,1 9.9,8A2.1,2.1 0 0,1 12,5.9Z" />
+  </svg>
+
+  <a href="#">CAM0 OFFLINE</a>  <svg style="width:27px;height:24px; vertical-align: middle;" viewBox="0 0 24 24">
+  <path fill="#6f6f6f" d="M13.73,15L9.83,21.76C10.53,21.91 11.25,22 12,22C14.4,22 16.6,21.15 18.32,19.75L14.66,13.4M2.46,15C3.38,17.92 5.61,20.26 8.45,21.34L12.12,15M8.54,12L4.64,5.25C3,7 2,9.39 2,12C2,12.68 2.07,13.35 2.2,14H9.69M21.8,10H14.31L14.6,10.5L19.36,18.75C21,16.97 22,14.6 22,12C22,11.31 21.93,10.64 21.8,10M21.54,9C20.62,6.07 18.39,3.74 15.55,2.66L11.88,9M9.4,10.5L14.17,2.24C13.47,2.09 12.75,2 12,2C9.6,2 7.4,2.84 5.68,4.25L9.34,10.6L9.4,10.5Z" />
+</svg>
+<br>
+
+<p>
+  <strong>Porximity:</strong> <span id="lidar-cm"></span>
+</p>
+<p>
+  <strong>Temperature:</strong> null
+</p>
+
+  </div>
+  <br>
+
+  <div class="control">
+
+
+    <div id="player">
+
+        <div id="volume"></div>
+    </div>
+    <p>
+      <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+  <path fill="#000000" d="M12,16A3,3 0 0,1 9,13C9,11.88 9.61,10.9 10.5,10.39L20.21,4.77L14.68,14.35C14.18,15.33 13.17,16 12,16M12,3C13.81,3 15.5,3.5 16.97,4.32L14.87,5.53C14,5.19 13,5 12,5A8,8 0 0,0 4,13C4,15.21 4.89,17.21 6.34,18.65H6.35C6.74,19.04 6.74,19.67 6.35,20.06C5.96,20.45 5.32,20.45 4.93,20.07V20.07C3.12,18.26 2,15.76 2,13A10,10 0 0,1 12,3M22,13C22,15.76 20.88,18.26 19.07,20.07V20.07C18.68,20.45 18.05,20.45 17.66,20.06C17.27,19.67 17.27,19.04 17.66,18.65V18.65C19.11,17.2 20,15.21 20,13C20,12 19.81,11 19.46,10.1L20.67,8C21.5,9.5 22,11.18 22,13Z" />
+</svg>
+      <strong>SPEED:</strong> +<span id="speed">127</span>
+    </p>
+
+
+        <div class="key-wrapper">
+          <!--
+          <ul class="row">
+            <li class="key k87">w</li>
+            <li class="key k65">a</li>
+            <li class="key k83">s</li>
+            <li class="key k68">d</li>
+          </ul>
+-->
+
+
+
+<div>
+  <ul style="float: left; width:50%; position:relative; right:32px;" class="row">
+
+    <li class="key k81 q">q</li>
+    <li class="key k69 e">e</li>
+    <p> <svg style="width:27px;height:27px;" viewBox="0 0 24 24">
+    <path fill="#0000" d="M13.73,15L9.83,21.76C10.53,21.91 11.25,22 12,22C14.4,22 16.6,21.15 18.32,19.75L14.66,13.4M2.46,15C3.38,17.92 5.61,20.26 8.45,21.34L12.12,15M8.54,12L4.64,5.25C3,7 2,9.39 2,12C2,12.68 2.07,13.35 2.2,14H9.69M21.8,10H14.31L14.6,10.5L19.36,18.75C21,16.97 22,14.6 22,12C22,11.31 21.93,10.64 21.8,10M21.54,9C20.62,6.07 18.39,3.74 15.55,2.66L11.88,9M9.4,10.5L14.17,2.24C13.47,2.09 12.75,2 12,2C9.6,2 7.4,2.84 5.68,4.25L9.34,10.6L9.4,10.5Z" />
+  </svg><strong>CAMERA</strong>
+</p>
+  </ul>
+
+
+
+
+  <ul style="    width: 50%;
+    float: right;
+    position: relative;
+    right: 50px;
+    top:108px;
+" class="row">
+
+              <ul  class="row">
+                    <li class="key k38 up">⇧</li>
+              </ul>
+
+              <ul class="row">
+                <li class="key k37 left">⇦</li>
+                <li class="key k40 down">⇩</li>
+                <li class="key k39 right">⇨</li>
+              </ul>
+  </ul>
+
+  <ul style="    top: 55px;
+    position: relative;
+    left: 100px;" class="row">
+
+
+      <li class="key k16 shift">shift</li>
+      <li class="key k32">space</li>
+      <p style="text-align: left;">
+
+<span style="margin-right:180px">
+  <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+<path fill="#000000" d="M9,10L6,5H18L15,10H9M18,4H6V2H18V4M9,22V11H15V22H9M12,13A1,1 0 0,0 11,14A1,1 0 0,0 12,15A1,1 0 0,0 13,14A1,1 0 0,0 12,13Z" />
+</svg> <strong>LIGHT</strong>
+</span>
+
+<span style="margin-right:160px">
+  <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+      <path fill="#000000" d="M16,4L9,8.04V15.96L16,20L23,15.96V8.04M16,6.31L19.8,8.5L16,10.69L12.21,8.5M0,7V9H7V7M11,10.11L15,12.42V17.11L11,14.81M21,10.11V14.81L17,17.11V12.42M2,11V13H7V11M4,15V17H7V15" />
+  </svg> <strong>LAUNCH</strong>
+</span>
+
+<span>
+  <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+      <path fill="#000000" d="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.67 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z" />
+  </svg> <strong>MOTORS</strong>
+
+</span>
+  </p>
+  </ul>
+
+</div>
+
+
+        </div>
+
+  </div>
+<br><br><br>
+</div>
+
+
+      <!--
+      <input id="vel" type="number" name="velocidad" placeholder="Valor entre 0 y 255">
+     <input id="btn-vel" type="submit" class="btn btn-info start" value="Aplicar Velocidad">
+-->
+
+
+
+
+
+</body>
+  <script src="static/interstellar.js"></script>
+</html>

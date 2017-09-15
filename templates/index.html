@@ -120,10 +120,10 @@
           },{
             "keys": "shift",
             "on_keydown": function() {
-                luzEstado = !luzEstado;
-                console.log(luzEstado);
-                socket.emit('luzOn-Off', luzEstado );
-                if (luzEstado) {
+                estado = !estado;
+                console.log(estado);
+                socket.emit('ServoOn-Off', estado );
+                if (estado) {
                     $(".shift").addClass('active');
                 } else {
                   $(".shift").removeClass('active');

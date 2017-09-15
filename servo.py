@@ -23,3 +23,10 @@ class Servo():
     def stop(self):
         pwm.stop()
         GPIO.cleanup()
+
+    def turn_180(self):
+        while True:
+            self.set_angle(0)
+            self.set_angle(90)
+            self.set_angle(180)
+            self.set_angle(90)

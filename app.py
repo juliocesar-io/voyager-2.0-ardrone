@@ -26,7 +26,7 @@ def background_lidar_thread():
         else:
             while (connected_l >= 0):
                 dist = lidar.getDistance()
-                socketio.sleep(10)
+                socketio.sleep(1)
                 socketio.emit('lidar_response', {'data': 'lidar_cm', 'cm': dist})
         	if dist < 40:
         		print "Retroceder!"

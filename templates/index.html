@@ -173,11 +173,15 @@
           var velocidad_num = $('#vel').val();
           socket.emit('vel', velocidad_num );
         });
+
+        socket.on('lidar_response', function(msg) {
+            $('#lidar-cm').append(msg.cm + " cm");
+        });
+
+
     });
 
-    socket.on('lidar_response', function(msg) {
-        $('#lidar-cm').append(msg.cm + " cm");
-    });
+
   </script>
 
 </head>

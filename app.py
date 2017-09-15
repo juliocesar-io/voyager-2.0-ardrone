@@ -5,6 +5,7 @@ from lidar import Lidar_Lite
 import os
 import signal
 import subprocess
+import libardrone
 
 
 async_mode = None
@@ -19,6 +20,7 @@ thread_lock = Lock()
 lidar = Lidar_Lite()
 connected_l = lidar.connect(1)
 
+drone = libardrone.ARDrone()
 
 def background_lidar_thread():
     while True:
@@ -36,6 +38,38 @@ def background_lidar_thread():
 @app.route('/')
 def index():
     return render_template('index.html')
+
+
+@socketio.on('DisparadorOn-Off')
+def start(takeoff):
+    if takeoff:
+        drone.takeoff()
+    else:
+        drone.land()
+
+@socketio.on('goForward')
+def go_forward():
+    drone.move_forward()
+
+@socketio.on('goBackward')
+def go_backward():
+    drone.move_backward()
+
+@socketio.on('turnLeft')
+def go_forward():
+    drone.turn_left()
+
+@socketio.on('turnRight')
+def go_forward():
+    drone.turn_right()
+
+@socketio.on('brazoW')
+def go_forward():
+    drone.move_up()
+
+@socketio.on('brazoS')
+def go_forward():
+    drone.move_down()
 
 @socketio.on('ServoOn-Off')
 def servo_control(estado):

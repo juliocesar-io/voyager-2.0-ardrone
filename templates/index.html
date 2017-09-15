@@ -24,7 +24,7 @@
     $(document).ready(function() {
       var listener = new window.keypress.Listener();
       var socket = io.connect();
-      var estado = 1;
+      var estado = 0;
       var disparadorEstado = 0;
       var gradosCam = 90;
       var my_combos = listener.register_many([

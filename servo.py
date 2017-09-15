@@ -1,27 +1,26 @@
+#!/usr/bin/env python
 import RPi.GPIO as GPIO
 from time import sleep
-
+import atexit
 
 class Servo():
 
-    def connect(self, pin):
-        self.pin = pin
+    def start(self):
         GPIO.setmode(GPIO.BCM)
-        GPIO.setup(pin, GPIO.OUT)
-        pwm=GPIO.PWM(pin, 50)
-        pwm.start(0)
-
+        GPIO.setup(14, GPIO.OUT)
+        self.pwm = GPIO.PWM(14, 50)
+        self.pwm.start(0)
 
     def set_angle(self, angle):
     	duty = angle / 18 + 2
-    	GPIO.output(self.pin, True)
-    	pwm.ChangeDutyCycle(duty)
-    	sleep(0.5)
-    	GPIO.output(self.pin, False)
-    	pwm.ChangeDutyCycle(0)
+    	GPIO.output(14, True)
+    	self.pwm.ChangeDutyCycle(duty)
+    	sleep(0.3)
+    	GPIO.output(14, False)
+    	self.pwm.ChangeDutyCycle(0)
 
     def stop(self):
-        pwm.stop()
+        self.pwm.stop()
         GPIO.cleanup()
 
     def turn_180(self):
@@ -30,3 +29,13 @@ class Servo():
             self.set_angle(90)
             self.set_angle(180)
             self.set_angle(90)
+
+s = Servo()
+s.start()
+s.turn_180()
+
+def exit_handler():
+    print 'Stoping servo!'
+    s.stop()
+
+atexit.register(exit_handler)

@@ -1,9 +1,11 @@
 from flask import Flask, render_template
 from flask_socketio import SocketIO, emit
 from threading import Lock
-# local
 from lidar import Lidar_Lite
-from servo import Servo
+import os
+import signal
+import subprocess
+
 
 async_mode = None
 
@@ -11,12 +13,11 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = '23dfgmdfgm345!'
 socketio = SocketIO(app, async_mode=async_mode)
 thread = None
+servo_pro = None
 thread_lock = Lock()
 
 lidar = Lidar_Lite()
 connected_l = lidar.connect(1)
-
-servo = Servo()
 
 
 def background_lidar_thread():
@@ -26,7 +27,7 @@ def background_lidar_thread():
         else:
             while (connected_l >= 0):
                 dist = lidar.getDistance()
-                #socketio.sleep(1)
+                socketio.sleep(0.1)
                 socketio.emit('lidar_response', {'data': 'lidar_cm', 'cm': dist})
         	if dist < 40:
         		print "Retroceder!"
@@ -38,11 +39,12 @@ def index():
 
 @socketio.on('ServoOn-Off')
 def servo_control(estado):
-    if estado:
-        servo.connect(14)
-        servo.turn_180()
+    global servo_pro
+    if estado and servo_pro is None:
+        servo_pro = subprocess.Popen("./servo.py", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
     else:
-        servo.stop()
+        os.killpg(os.getpgid(servo_pro.pid), signal.SIGTERM)
+        servo_pro = None
 
 
 @socketio.on('connect')

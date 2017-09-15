@@ -27,10 +27,10 @@ def background_lidar_thread():
         else:
             while (connected_l >= 0):
                 dist = lidar.getDistance()
-                print dist
+                socketio.emit('lidar_response', {'data': 'lidar_cm', 'cm': dist})
         	if dist < 40:
         		print "Retroceder!"
-            socketio.emit('lidar_response', {'data': 'lidar_cm', 'cm': dist})
+
 
 @app.route('/')
 def index():

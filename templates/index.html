@@ -175,7 +175,7 @@
         });
 
         socket.on('lidar_response', function(msg) {
-            $('#lidar-cm').append(msg.cm + " cm");
+            $('#lidar-cm').text(msg.cm + " cm");
         });
 
 

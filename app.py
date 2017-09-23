@@ -83,7 +83,7 @@ def test_connect():
     with thread_lock:
         if thread is None:
             thread = socketio.start_background_task(target=background_lidar_thread)
-    emit('connect', {'data': 'Connected', 'count': 0})
+    emit('reps', {'data': 'Connected', 'count': 0})
 
 if __name__ == '__main__':
     socketio.run(app, host="0.0.0.0", debug=True, port=8080)

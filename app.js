@@ -14,30 +14,30 @@ socket.on('lidar_response', (data) =>
   console.log(data.cm)
 
   if (data.cm < 40) {
-    client.back()
+    console.log("back!")
   }
 );
 
-socket.on('takeoff', () =>
+socket.once('takeoff', () =>
   client.takeoff();
 );
 
-socket.on('land', () =>
+socket.once('land', () =>
   client.land();
 );
 
-socket.on('up', () =>
+socket.once('up', () =>
   client.up();
 );
 
-socket.on('down', () =>
+socket.once('down', () =>
   client.down();
 );
-socket.on('left', () =>
+socket.once('left', () =>
   client.left();
 );
 
-socket.on('right', () =>
+socket.once('right', () =>
   client.right();
 );
 

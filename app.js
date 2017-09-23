@@ -14,7 +14,7 @@ socket.on('lidar_response', (data) =>
   console.log(data.cm)
 
   if (data.cm < 40) {
-    console.log("back!")
+    console.log("back!");
   }
 );
 

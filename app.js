@@ -9,36 +9,36 @@ socket.on('connect', () => {
     socket.emit('ping', {});
 });
 
-socket.on('lidar_response', (data) =>
+socket.on('lidar_response', (data) => {
 
   console.log(data.cm)
 
   if (data.cm < 40) {
     console.log("back!");
   }
-);
+});
 
-socket.once('takeoff', () =>
+socket.once('takeoff', () => {
   client.takeoff();
-);
+});
 
-socket.once('land', () =>
+socket.once('land', () => {
   client.land();
-);
+});
 
-socket.once('up', () =>
+socket.once('up', () => {
   client.up();
-);
+});
 
-socket.once('down', () =>
+socket.once('down', () => {
   client.down();
-);
-socket.once('left', () =>
+});
+socket.once('left', () => {
   client.left();
-);
+});
 
-socket.once('right', () =>
+socket.once('right', () =>  {
   client.right();
-);
+});
 
 console.log('Started');

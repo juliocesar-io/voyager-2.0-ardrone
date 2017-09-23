@@ -177,6 +177,10 @@
           socket.emit('vel', velocidad_num );
         });
 
+        $('#reset').click(function() {
+          socket.emit('eme');
+        });
+
         socket.on('lidar_response', function(msg) {
             $('#lidar-cm').text(msg.cm + " cm");
         });
@@ -210,7 +214,7 @@
         <button type="button" name="button"><svg style="width:18px;height:18px; vertical-align: middle;" viewBox="0 0 24 24">
     <path fill="#000000" d="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z" />
 </svg> Save</button>
-        <button type="button" name="button"><svg style="width:18px;height:18px; vertical-align: middle;" viewBox="0 0 24 24">
+        <button id="reset" type="button" name="button"><svg style="width:18px;height:18px; vertical-align: middle;" viewBox="0 0 24 24">
     <path fill="#000000" d="M12,3A9,9 0 0,0 3,12H0L4,16L8,12H5A7,7 0 0,1 12,5A7,7 0 0,1 19,12A7,7 0 0,1 12,19C10.5,19 9.09,18.5 7.94,17.7L6.5,19.14C8.04,20.3 9.94,21 12,21A9,9 0 0,0 21,12A9,9 0 0,0 12,3M14,12A2,2 0 0,0 12,10A2,2 0 0,0 10,12A2,2 0 0,0 12,14A2,2 0 0,0 14,12Z" />
 </svg>Reset</button>
         <button type="button" name="button"><svg style="width:18px;height:18px; vertical-align: middle;" viewBox="0 0 24 24">

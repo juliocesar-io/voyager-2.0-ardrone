@@ -27,18 +27,25 @@ socket.once('land', () => {
 });
 
 socket.once('up', () => {
-  client.up();
+  client.up(0.2);
 });
 
 socket.once('down', () => {
-  client.down();
+  client.down(0.2);
 });
 socket.once('left', () => {
-  client.left();
+  client.left(0.2);
 });
 
 socket.once('right', () =>  {
-  client.right();
+  client.right(0.2);
 });
+
+socket.once('eme', () =>  {
+  client.disableEmergency()
+});
+
+
+
 
 console.log('Started');

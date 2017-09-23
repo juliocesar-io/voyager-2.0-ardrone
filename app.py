@@ -67,6 +67,10 @@ def go_forward():
 def go_forward():
     socketio.emit('down')
 
+@socketio.on('eme')
+def disable_emergency():
+    socketio.emit('eme')
+
 @socketio.on('ServoOn-Off')
 def servo_control(estado):
     global servo_pro

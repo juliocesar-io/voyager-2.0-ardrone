@@ -25,19 +25,19 @@ var sockets = {};
 
 const socketIN = require('socket.io-client')('http://0.0.0.0:8080');
 
+socketIN.on('lidar_response', (data) => {
+
+  console.log(data.cm)
+
+  if (data.cm < 40) {
+    console.log("back!");
+  }
+});
+
 io.on('connection', (socket) => {
 
   sockets[socket.id] = socket;
   console.log("Clientes conectados ", Object.keys(sockets).length);
-
-  socket.on('lidar_response', (data) => {
-
-    console.log(data.cm)
-
-    if (data.cm < 40) {
-      console.log("back!");
-    }
-  });
 
   socket.on('takeoff', () => {
     if (onAir == false) {

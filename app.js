@@ -94,11 +94,9 @@ io.on('connection', (socket) => {
     }
   });
 
-  socket.on('xxx', () =>  {
-    if (onAir) {
-      client.stop();
-      console.log("stop!");
-    }
+  socket.on('ServoOn-Off', (estado) =>  {
+    socketIN.emmit("ServoOn-Off", estado)
+
   });
 
   socket.on('eme', () =>  {
@@ -106,5 +104,6 @@ io.on('connection', (socket) => {
     console.log("disableEmergency!");
 
   });
+
 
 });

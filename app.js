@@ -95,7 +95,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('ServoOn-Off', (estado) =>  {
-    socketIN.emmit("ServoOn-Off", estado)
+    socketIN.emit("ServoOn-Off", estado)
 
   });
 

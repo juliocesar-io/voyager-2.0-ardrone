@@ -28,9 +28,14 @@ const socketIN = require('socket.io-client')('http://0.0.0.0:8080');
 socketIN.on('lidar_response', (data) => {
 
   console.log(data.cm)
+  io.emit("lidar_web", data)
 
   if (data.cm < 40) {
-    console.log("back!");
+    if (onAir) {
+      client.stop();
+      client.back(0.1);
+      client.stop();
+    }
   }
 });
 
@@ -49,6 +54,7 @@ io.on('connection', (socket) => {
 
   socket.on('land', () => {
     if (onAir) {
+      client.stop();
       client.land();
       console.log("land!");
       onAir = false;

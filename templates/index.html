@@ -128,7 +128,7 @@
           console.log("Disable Emergency");
         });
 
-        socket.on('lidar_response', function(msg) {
+        socket.on('lidar_web', function(msg) {
             $('#lidar-cm').text(msg.cm + " cm");
         });
 

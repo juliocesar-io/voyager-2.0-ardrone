@@ -9,6 +9,7 @@
   "author": "Julio César",
   "license": "BSD",
   "dependencies": {
+    "express": "^4.13.4",
     "ar-drone": "git://github.com/felixge/node-ar-drone.git",
     "socket.io": "~1.3.5",
     "socket.io-client": "^2.0.3"

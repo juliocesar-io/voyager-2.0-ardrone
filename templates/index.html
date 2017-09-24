@@ -31,91 +31,58 @@
           {
               "keys": "up",
               "on_keydown": function() {
-                  console.log("Client: Going forward");
-                  socket.emit('goForward');
+                  socket.emit('up');
                   $(".up").addClass('active');
               },
               "on_keyup": function(e) {
-                  console.log("Client: Stop!");
                   socket.emit('stop');
                   $(".up").removeClass('active');
               }
           }, {
               "keys": "down",
               "on_keydown": function() {
-                  console.log("Client: Going backward");
-                  socket.emit('goBackward');
+                  socket.emit('down');
                   $(".down").addClass('active');
               },
               "on_keyup": function(e) {
-                  console.log("Client: Stop!");
                   socket.emit('stop');
                   $(".down").removeClass('active');
               }
           },{
               "keys": "left",
               "on_keydown": function() {
-                  console.log("Client: Turning left");
-                  socket.emit('turnLeft');
+                  socket.emit('left');
                   $(".left").addClass('active');
               },
               "on_keyup": function(e) {
-                  console.log("Client: Stop!");
                   socket.emit('stop');
                   $(".left").removeClass('active');
               }
           },{
               "keys": "right",
               "on_keydown": function() {
-                  console.log("Client: Turning right");
-                  socket.emit('turnRight');
+                  socket.emit('right');
                   $(".right").addClass('active');
               },
               "on_keyup": function(e) {
-                  console.log("Client: Stop!");
                   socket.emit('stop');
                   $(".right").removeClass('active');
               }
           },{
-            "keys": "a",
-            "on_keydown": function() {
-                socket.emit('pinzaA');
-            },
-            "on_keyup": function(e) {
-                console.log("--");
-            }
-          },{
-            "keys": "d",
-            "on_keydown": function() {
-                socket.emit('pinzaD');
-            },
-            "on_keyup": function(e) {
-                console.log("--");
-            }
-          },{
             "keys": "w",
             "on_keydown": function() {
-                socket.emit('brazoW');
+                socket.emit('front');
             },
             "on_keyup": function(e) {
-                console.log("--");
-                //socket.emit('brazoB');
+                socket.emit('stop');
             }
           },{
             "keys": "s",
             "on_keydown": function() {
-                socket.emit('brazoS');
+                socket.emit('back');
             },
             "on_keyup": function(e) {
-                console.log("--");
-            }
-          },{
-            "keys": "x",
-            "on_keydown": function() {
-                socket.emit('brazoX');
-            },
-            "on_keyup": function(e) {
-                console.log("--");
+                socket.emit('stop');
             }
           },{
             "keys": "shift",
@@ -136,42 +103,21 @@
             "keys": "space",
             "on_keydown": function() {
                 disparadorEstado = !disparadorEstado;
-                socket.emit('DisparadorOn-Off', disparadorEstado);
+
                 console.log(disparadorEstado);
                 if (disparadorEstado) {
                     $(".k32").addClass('active');
+                    socket.emit('takeoff');
                 } else {
                     $(".k32").removeClass('active');
+                    socket.emit('land');
                 }
             },
             "on_keyup": function(e) {
             }
-          },{
-            "keys": "q",
-            "on_keydown": function() {
-                gradosCam = gradosCam + 5
-                console.log(gradosCam);
-                socket.emit('servoCam', gradosCam);
-                  $(".q").addClass('active');
-            },
-            "on_keyup": function(e) {
-              console.log("--");
-              $(".q").removeClass('active');
-            }
-          },{
-            "keys": "e",
-            "on_keydown": function() {
-                gradosCam = gradosCam - 5
-                console.log(gradosCam);
-                socket.emit('servoCam', gradosCam);
-                  $(".e").addClass('active');
-            },
-            "on_keyup": function(e) {
-              console.log("--");
-              $(".e").removeClass('active');
-            }
           }
         ]);
+
         $('#btn-vel').click(function() {
           var velocidad_num = $('#vel').val();
           socket.emit('vel', velocidad_num );

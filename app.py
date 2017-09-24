@@ -5,7 +5,6 @@ from lidar import Lidar_Lite
 import os
 import signal
 import subprocess
-import libardrone
 
 
 async_mode = None
@@ -29,47 +28,6 @@ def background_lidar_thread():
                 dist = lidar.getDistance()
                 socketio.sleep(0.1)
                 socketio.emit('lidar_response', {'data': 'lidar_cm', 'cm': dist})
-
-
-@app.route('/')
-def index():
-    return render_template('index.html')
-
-
-@socketio.on('DisparadorOn-Off')
-def start(takeoff):
-    if takeoff:
-        socketio.emit('takeoff')
-    else:
-        socketio.emit('land')
-
-@socketio.on('goForward')
-def go_forward():
-    socketio.emit('front')
-
-@socketio.on('goBackward')
-def go_backward():
-    socketio.emit('back')
-
-@socketio.on('turnLeft')
-def go_forward():
-    socketio.emit('left')
-
-@socketio.on('turnRight')
-def go_forward():
-    socketio.emit('right')
-
-@socketio.on('brazoW')
-def go_forward():
-    socketio.emit('up')
-
-@socketio.on('brazoS')
-def go_forward():
-    socketio.emit('down')
-
-@socketio.on('eme')
-def disable_emergency():
-    socketio.emit('eme')
 
 @socketio.on('ServoOn-Off')
 def servo_control(estado):

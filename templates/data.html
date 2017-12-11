@@ -1,0 +1,75 @@
+<html>
+<head>
+    <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="static/status.css" media="screen" title="no title" charset="utf-8">
+  <link href="static/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="static/font-awesome.min.css">
+  <script src="static/jquery.min.js"></script>
+ <script src="static/jquery-ui.min.js"></script>
+  <script src="static/keypress.js"></script>
+  <script src="static/socket.io.min.js"></script>
+
+
+
+  <style type="text/css">
+  #stream {
+    height: 99%;
+    margin: 0px auto;
+    display: block;
+    margin-top: 20px;
+  }
+  </style>
+
+
+</head>
+<body style="text-align:center; ">
+
+<div class="panel">
+  <br>
+  <img style="width:150px" src="static/img/logo.png" alt="" />
+  <br>
+  <p style="color:#6f6f6f;">Data Log</p>
+
+  <br>
+
+    <ul class="menu">
+
+
+        <a href="/graph" name="button"><svg style="width:24px;height:24px" viewBox="0 0 24 24">
+    <path fill="#000000" d="M16,11.78L20.24,4.45L21.97,5.45L16.74,14.5L10.23,10.75L5.46,19H22V21H2V3H4V17.54L9.5,8L16,11.78Z" />
+</svg> Ver Graficas</a>
+</ul>
+
+  <table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">TIMESTAMP</th>
+      <th scope="col">LAT</th>
+      <th scope="col">LON</th>
+      <th scope="col">CPM</th>
+      <th scope="col">TEMP</th>
+      <th scope="col">ELEV</th>
+      <th scope="col">UV</th>
+      <th scope="col">IMG</th>
+      <th>LIDAR</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2017-12-11T16:49:21+00:00</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+
+</div>
+</body>
+
+</html>

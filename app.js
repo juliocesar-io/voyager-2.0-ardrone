@@ -17,6 +17,18 @@ app.get('/', function(req, res) {
   res.sendFile(__dirname + '/templates/index.html');
 });
 
+app.get('/data', function(req, res) {
+  res.sendFile(__dirname + '/templates/data.html');
+});
+
+app.get('/data.json', function(req, res) {
+  res.sendFile(__dirname + '/data.json');
+});
+
+app.get('/graph', function(req, res) {
+  res.sendFile(__dirname + '/templates/graph.html');
+});
+
 var arDrone = require('ar-drone');
 var client = arDrone.createClient({ip: "192.168.1.25"});
 var onAir = false;

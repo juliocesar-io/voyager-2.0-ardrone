@@ -43,6 +43,7 @@
   <table class="table table-hover">
   <thead>
     <tr>
+      <th>MUESTRA</th>
       <th scope="col">TIMESTAMP</th>
       <th scope="col">LAT</th>
       <th scope="col">LON</th>
@@ -54,22 +55,51 @@
       <th>LIDAR</th>
     </tr>
   </thead>
-  <tbody>
-    <tr>
-      <td>2017-12-11T16:49:21+00:00</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-    </tr>
+  <tbody id="data-list">
+
   </tbody>
 </table>
 
 </div>
 </body>
+
+<script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDK1n3VWszsogMTa0jawcR1s29FWA0Cy-c",
+    authDomain: "voyager01.firebaseapp.com",
+    databaseURL: "https://voyager01.firebaseio.com",
+    projectId: "firebase-voyager01",
+    storageBucket: "firebase-voyager01.appspot.com",
+    messagingSenderId: "891548660461"
+  };
+  firebase.initializeApp(config);
+
+
+
+
+
+  firebase.database().ref('/samples').on('child_added', function(child) {
+
+      
+              var key = child.key;
+              var value = child.val();
+              $("#data-list").append(" <tr> \
+                <td> <a href='/sample/"+ key +"'>" + value.sample + " </a> </td> \
+                <td>" + new Date(value.timestamp) + "</td> \
+                <td>" + value.lat + "</td> \
+                <td>" + value.lon + "</td> \
+                <td>" + value.cpm + "</td> \
+                <td>" + value.temp + "</td> \
+                <td>" + value.elev + "</td> \
+                <td>" + value.uv + "</td> \
+                <td>" + value.img + "</td> \
+                <td>" + value.lidar + "</td> \
+                </tr>");
+      });
+  
+
+</script>
 
 </html>

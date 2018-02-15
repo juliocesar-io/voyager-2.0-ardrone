@@ -43,8 +43,8 @@ io.on('connection', (socket) => {
   console.log("Clientes conectados ", Object.keys(sockets).length);
 });
 
-function writeSampleData(json) {
-  refS.push(json);
+function writeSampleData(sensors, meta) {
+  refS.push({"sensors": sensors, "meta": meta});
 }
 
 
@@ -65,7 +65,7 @@ function connectToParticle(deviceID, accessToken) {
         var rawData = JSON.parse(e.data);
         var parsedData = JSON.parse(rawData.data);
         console.log('Nueva muestra', parsedData)
-        writeSampleData(parsedData);
+        writeSampleData(parsedData, e.published_at);
     }, false)
 
     return eventSource

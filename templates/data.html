@@ -86,16 +86,16 @@
               var key = child.key;
               var value = child.val();
               $("#data-list").append(" <tr> \
-                <td> <a href='/sample/"+ key +"'>" + "Null" + " </a> </td> \
-                <td>" + "Null" + "</td> \
-                <td>" + value.cpm + "</td> \
-                <td>" + value.dp + "</td> \
-                <td>" + value.hi + "</td> \
-                <td>" + value.hum + +" %"+ "</td> \
-                <td>" + value.ir + "</td> \
-                <td>" + value.temp + " °C" + "</td> \
-                <td>" + value.uv + "</td> \
-                <td>" + value.vis + "</td> \
+                <td> <a href='/sample/"+ key +"'>" + value.sensors.muestra + " </a> </td> \
+                <td>" + value.published_at + "</td> \
+                <td>" + value.sensors.cpm + "</td> \
+                <td>" + value.sensors.dp + "</td> \
+                <td>" + value.sensors.hi + "</td> \
+                <td>" + value.sensors.hum + +" %"+ "</td> \
+                <td>" + value.sensors.ir + "</td> \
+                <td>" + value.sensors.temp + " °C" + "</td> \
+                <td>" + value.sensors.uv + "</td> \
+                <td>" + value.sensors.vis + "</td> \
                 </tr>");
       });
   

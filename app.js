@@ -43,8 +43,8 @@ io.on('connection', (socket) => {
   console.log("Clientes conectados ", Object.keys(sockets).length);
 });
 
-function writeSampleData(sensors, meta) {
-  refS.push({"sensors": sensors, "meta": meta});
+function writeSampleData(sensors, published_at) {
+  refS.push({"sensors" sensors, "published_at": published_at});
 }
 
 
@@ -64,8 +64,8 @@ function connectToParticle(deviceID, accessToken) {
     eventSource.addEventListener('onData', (e) => {
         var rawData = JSON.parse(e.data);
         var parsedData = JSON.parse(rawData.data);
-        console.log('Nueva muestra', parsedData)
-        writeSampleData(parsedData, e.published_at);
+        console.log('Nueva muestra', parsedData);
+        writeSampleData(parsedData, rawData.published_at);
     }, false)
 
     return eventSource
@@ -73,5 +73,4 @@ function connectToParticle(deviceID, accessToken) {
 
 
 // Conectarse a el API de particle, obtener Token en https://build.particle.io
-connectToParticle('TuDeviceID', 'TuAccessToken');
-
+connectToParticle('', '');

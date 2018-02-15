@@ -7,9 +7,8 @@
     "test": "test"
   },
   "author": "Julio César",
-  "license": "BSD",
+  "license": "MIT",
   "dependencies": {
-    "ar-drone": "git://github.com/felixge/node-ar-drone.git",
     "express": "^4.13.4",
     "firebase-admin": "^5.5.1",
     "sleep": "^5.1.1",

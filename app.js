@@ -1,11 +1,11 @@
-
 var express = require('express'),
     app = express(),
     http = require('http').Server(app),
     io = require('socket.io')(http),
     path = require('path'),
     firebase = require("firebase-admin"),
-    serviceAccount = require("./firebasekey.json");
+    serviceAccount = require("./firebasekey.json"),
+    EventSource = require('eventsource');
 
 firebase.initializeApp({
   credential: firebase.credential.cert(serviceAccount),
@@ -48,14 +48,6 @@ function writeSampleData(json) {
 }
 
 
-
-for (var i = 25; i >= 0; i--) {
-  var d = new Date().toString();
-  console.log(d);
- 
-
-}
-
 function connectToParticle(deviceID, accessToken) {
     console.log('Conectando a Particle ..')
 
@@ -70,15 +62,15 @@ function connectToParticle(deviceID, accessToken) {
         console.log("Errored!"); },false)
 
     eventSource.addEventListener('onData', (e) => {
-        let parsedData = JSON.parse(e.data)
+        var rawData = JSON.parse(e.data);
+        var parsedData = JSON.parse(rawData.data);
         console.log('Nueva muestra', parsedData)
         writeSampleData(parsedData);
-
-
     }, false)
 
     return eventSource
 }
+
 
 // Conectarse a el API de particle, obtener Token en https://build.particle.io
 connectToParticle('TuDeviceID', 'TuAccessToken');

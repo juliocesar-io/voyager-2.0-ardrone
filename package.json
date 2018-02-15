@@ -9,6 +9,7 @@
   "author": "Julio César",
   "license": "MIT",
   "dependencies": {
+    "eventsource": "^1.0.5",
     "express": "^4.13.4",
     "firebase-admin": "^5.5.1",
     "sleep": "^5.1.1",

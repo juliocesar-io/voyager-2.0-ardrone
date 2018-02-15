@@ -45,14 +45,14 @@
     <tr>
       <th>MUESTRA</th>
       <th scope="col">TIMESTAMP</th>
-      <th scope="col">LAT</th>
-      <th scope="col">LON</th>
       <th scope="col">CPM</th>
+      <th scope="col">DP</th>
+      <th scope="col">HI</th>
+      <th scope="col">HUM</th>
+      <th scope="col">IR</th>
       <th scope="col">TEMP</th>
-      <th scope="col">ELEV</th>
       <th scope="col">UV</th>
-      <th scope="col">IMG</th>
-      <th>LIDAR</th>
+      <th>VIS</th>
     </tr>
   </thead>
   <tbody id="data-list">
@@ -86,16 +86,16 @@
               var key = child.key;
               var value = child.val();
               $("#data-list").append(" <tr> \
-                <td> <a href='/sample/"+ key +"'>" + value.sample + " </a> </td> \
-                <td>" + new Date(value.timestamp) + "</td> \
-                <td>" + value.lat + "</td> \
-                <td>" + value.lon + "</td> \
+                <td> <a href='/sample/"+ key +"'>" + "Null" + " </a> </td> \
+                <td>" + "Null" + "</td> \
                 <td>" + value.cpm + "</td> \
-                <td>" + value.temp + "</td> \
-                <td>" + value.elev + "</td> \
+                <td>" + value.dp + "</td> \
+                <td>" + value.hi + "</td> \
+                <td>" + value.hum + +" %"+ "</td> \
+                <td>" + value.ir + "</td> \
+                <td>" + value.temp + " °C" + "</td> \
                 <td>" + value.uv + "</td> \
-                <td>" + value.img + "</td> \
-                <td>" + value.lidar + "</td> \
+                <td>" + value.vis + "</td> \
                 </tr>");
       });
   

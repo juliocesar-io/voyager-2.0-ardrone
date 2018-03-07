@@ -44,7 +44,7 @@ io.on('connection', (socket) => {
 });
 
 function writeSampleData(sensors, published_at) {
-  refS.push({"sensors" sensors, "published_at": published_at});
+  refS.push({"sensors": sensors, "published_at": published_at});
 }
 
 

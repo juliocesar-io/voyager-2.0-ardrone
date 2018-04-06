@@ -46,6 +46,8 @@
       <th>MUESTRA</th>
       <th scope="col">TIMESTAMP</th>
       <th scope="col">CPM</th>
+      <th scope="col">Sv0/h</th>
+      <th scope="col">Sv1/h</th>
       <th scope="col">DP</th>
       <th scope="col">HI</th>
       <th scope="col">HUM</th>
@@ -86,9 +88,11 @@
               var key = child.key;
               var value = child.val();
               $("#data-list").append(" <tr> \
-                <td> <a href='/sample/"+ key +"'>" + value.sensors.muestra + " </a> </td> \
+                <td> <a href='/sample/"+ key +"'>" + value.sensors.sample + " </a> </td> \
                 <td>" + value.published_at + "</td> \
                 <td>" + value.sensors.cpm + "</td> \
+                <td>" + value.sensors.sv0 + "</td> \
+                <td>" + value.sensors.sv1 + "</td> \
                 <td>" + value.sensors.dp + "</td> \
                 <td>" + value.sensors.hi + "</td> \
                 <td>" + value.sensors.hum + +" %"+ "</td> \
